@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  
+  gradio-main:
+    build:
+    
+      context: .
+      dockerfile: Dockerfile
+    image: trellis-gradio-main:latest
+    working_dir: /app
+    ports:
+      - "7860:7860"
+    restart: unless-stopped
+    environment:
+      - ATTN_BACKEND=xformers
+    volumes:
+      - ./:/app
+    #dit laat gpus toe voor deze service (vereist NVIDIA-stuurprogramma's + nvidia-container-toolkit)
+    gpus: all
+    
+    
+
+networks:
+  default:
+    driver: bridge
